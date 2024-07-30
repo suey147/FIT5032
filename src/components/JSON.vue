@@ -84,7 +84,8 @@
       <!-- Activity 12: Get the top sellers from the bookstores object. -->
       <!-- TODO: CODE TO GET TOP SELLERS HERE -->
       <p>
-        We operate in:{{ bookstores.countries }}
+        We operate in: 
+        <p v-for="bookstore in bookstores.countries" :key="bookstore" style="display: inline;">{{ bookstore }},</p>
       </p>
       <p>Our #1 seller:</p>
       <li v-for="book in bookstores.topSellers" :key="book">
