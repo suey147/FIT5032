@@ -85,37 +85,45 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed } from 'vue'
 
 // Activity 1: Import JSON files (authors.json and bookstores.json)
 // TODO: CODE TO IMPORT JSON FILES HERE
-
+import authors from '../assets/json/authors.json'
+import bookstores from '../assets/json/bookstores.json'
 const showMessage = ref(false)
 
 // Activity 2: Get authors born after 1850
 const modernAuthors = computed(() => {
   // TODO: CODE TO FILTER ARRAY OF AUTHORS HERE
+  return authors.filter((author) => author.birthYear > 1850)
 })
 
 // Activity 3: Get all famous works
 const allFamousWorks = computed(() => {
   // TODO: CODE TO GET ALL FAMOUS WORKS HERE
+  return authors.flatMap((author) => author.famousWorks.map((work) => work.title))
 })
 
 // Activity 4: Find author by name
 const orwell = computed(() => {
   // TODO: CODE TO FIND AUTHOR BY NAME HERE
-})
+  return authors.filter((author) => author.name === 'George Orwell')
+});
 
 // Activity 5: Find author by ID
 const austen = computed(() => {
   // TODO: CODE TO FIND AUTHOR BY ID HERE
+  // return authors.flatMap((author) => author.filter((auth) => work.title))
+  return authors.filter((author) => author.id == 1)
 })
+
+const highlightAuthorId = 2
 </script>
 
 <style scoped>
 .json-lab {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   max-width: 80vw;
   margin: 0 auto;
   padding: 20px;
@@ -160,7 +168,7 @@ code {
   background-color: #e0e0e0;
   padding: 2px 5px;
   border-radius: 4px;
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 ul {
