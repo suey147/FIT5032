@@ -20,7 +20,7 @@ import JSON from './components/JSON.vue'
 </template>
 
 <style scoped>
-/* header {
+header {
   line-height: 1.5;
 }
 
@@ -45,5 +45,5 @@ import JSON from './components/JSON.vue'
     place-items: flex-start;
     flex-wrap: wrap;
   }
-} */
+}
 </style>
