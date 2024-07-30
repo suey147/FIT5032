@@ -1,6 +1,7 @@
 <!-- JSONLab.vue -->
+
 <template>
-  <div class="json-lab">
+  <div class="json-lab" >
     <h1>🗄️ JSON Data & Vue Directives Lab</h1>
 
     <section class="lab-section">
@@ -10,17 +11,28 @@
       <h3>Iterating through Arrays</h3>
       <!-- Activity 6: Render a list containing author names and their birth years. Hint: Make use of the v-for directive to iterate through the array of authors. -->
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
-      
+      <ul>
+        <li v-for="author in authors" :key="author.id" :class="{highlight: author.id == highlightAuthorId}">
+          {{ author.name }} ({{ author.birthYear }})
+        </li>
+      </ul>
       <h3>Filtering Arrays</h3>
       <!-- Activity 7: Render a list containing authors born after 1850. Hint: Make use of the v-for directive to iterate through the array of authors that you have filtered out. -->
       <p>Authors born after 1850:</p>
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
-
+      <ul>
+        <li v-for="author in modernAuthors" :key="author.id" :class="{highlight: author.id == highlightAuthorId}">
+          {{ author.name }}({{ author.birthYear }})
+        </li>
+      </ul>
       <h3>Mapping Arrays</h3>
       <p>Famous works:</p>
       <ul>
         <!-- Activity 8: Render a list of all famous works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
         <!-- TODO: CODE TO RENDER LIST OF FAMOUS WORKS HERE -->
+        <li v-for="work in allFamousWorks" :key="work">
+          {{ work }}
+        </li>
       </ul>
 
       <h3>Finding in Arrays</h3>
@@ -30,6 +42,9 @@
       <p>{{ austen?.name }}'s works:</p>
       <!-- Activity 9: Render a list of Austen's works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
       <!-- TODO: CODE TO RENDER LIST OF AUSTEN'S WORKS HERE -->
+      <li v-for="work in austen.flatMap((works) => works.famousWorks.map((work) => work.title))" :key="work">
+          {{ work}}
+        </li>
     </section>
 
     <section class="lab-section">
@@ -41,29 +56,40 @@
         Company:
         <!-- Activity 9a: Get the company name from the bookstores object. -->
         <!-- TODO: CODE TO GET COMPANY NAME HERE -->
+         {{ bookstores?.name }}
       </p>
 
       <p>
         Total Stores:
         <!-- Activity 9b: Get the total number of stores from the bookstores object. -->
         <!-- TODO: CODE TO GET TOTAL STORES HERE -->
+         {{ bookstores?.totalStores }}
       </p>
 
       <h3>Iterating Object Properties</h3>
       <p>Store Types:</p>
       <!-- Activity 10: Iterate through the storeTypes array and display the store type and the number of stores that use that type. -->
       <!-- TODO: CODE TO RENDER LIST OF STORE TYPES HERE -->
-
+      <li v-for="(key, value) in bookstores.storeTypes" :key="key">
+        {{ value }}: {{ key }}
+      </li>
       <h3>Nested Objects</h3>
       <p>Opening Hours:</p>
       <!-- Activity 11: Iterate through the openingHours object and display the day of the week and the opening and closing times. -->
       <!-- TODO: CODE TO RENDER LIST OF OPENING HOURS HERE -->
-
+      <li v-for="(key, value) in bookstores.openingHours" :key="key">
+        {{ value }}: {{ key.open }} - {{ key.close }}
+      </li>
       <h3>Working with Arrays in Objects</h3>
       <!-- Activity 12: Get the top sellers from the bookstores object. -->
       <!-- TODO: CODE TO GET TOP SELLERS HERE -->
-      <p>We operate in:</p>
+      <p>
+        We operate in:{{ bookstores.countries }}
+      </p>
       <p>Our #1 seller:</p>
+      <li v-for="book in bookstores.topSellers" :key="book">
+        {{ book }}
+      </li>
     </section>
 
     <section class="lab-section">
@@ -81,7 +107,6 @@
       <p>Highlighting Specific Authors:</p>
 
     </section>
-  </div>
 </template>
 
 <script setup>
