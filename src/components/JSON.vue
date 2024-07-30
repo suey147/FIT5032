@@ -12,7 +12,7 @@
       <!-- Activity 6: Render a list containing author names and their birth years. Hint: Make use of the v-for directive to iterate through the array of authors. -->
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
       <ul>
-        <li v-for="author in authors" :key="author.id" :class="{highlight: author.id == highlightAuthorId}">
+        <li v-for="author in authors" :key="author.id">
           {{ author.name }} ({{ author.birthYear }})
         </li>
       </ul>
@@ -21,7 +21,7 @@
       <p>Authors born after 1850:</p>
       <!-- TODO: CODE TO RENDER LIST OF AUTHORS HERE -->
       <ul>
-        <li v-for="author in modernAuthors" :key="author.id" :class="{highlight: author.id == highlightAuthorId}">
+        <li v-for="author in modernAuthors" :key="author.id">
           {{ author.name }}({{ author.birthYear }})
         </li>
       </ul>
@@ -42,9 +42,9 @@
       <p>{{ austen?.name }}'s works:</p>
       <!-- Activity 9: Render a list of Austen's works. Hint: Use the v-for directive to iterate through the array of authors that you have filtered out. -->
       <!-- TODO: CODE TO RENDER LIST OF AUSTEN'S WORKS HERE -->
-      <li v-for="work in austen.flatMap((works) => works.famousWorks.map((work) => work.title))" :key="work">
-          {{ work}}
-        </li>
+      <li v-for="work in austen.famousWorks" :key="work">
+          {{ work.title}}
+      </li>
     </section>
 
     <section class="lab-section">
@@ -105,6 +105,9 @@
     <section class="lab-section">
       <h2>Attribute, Class and Style Binding with <code>v-bind</code></h2>
       <p>Highlighting Specific Authors:</p>
+      <li v-for="author in authors" :key="author" :class="{highlight: author.id == highlightAuthorId}">
+        {{ author.name }}
+      </li>
     </section>
   </div>
 </template>
@@ -133,14 +136,14 @@ const allFamousWorks = computed(() => {
 // Activity 4: Find author by name
 const orwell = computed(() => {
   // TODO: CODE TO FIND AUTHOR BY NAME HERE
-  return authors.filter((author) => author.name === 'George Orwell')
+  return authors.filter((author) => author.name === 'George Orwell')[0]
 });
 
 // Activity 5: Find author by ID
 const austen = computed(() => {
   // TODO: CODE TO FIND AUTHOR BY ID HERE
   // return authors.flatMap((author) => author.filter((auth) => work.title))
-  return authors.filter((author) => author.id == 1)
+  return authors.filter((author) => author.id == 1)[0]
 })
 
 const highlightAuthorId = 2
