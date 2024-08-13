@@ -9,24 +9,24 @@
                 <form @submit.prevent="submitForm">
                     <!-- add bottom margin of 3 units -->
                     <div class="row mb-3">
-                        <div class="col-md-6 form-column">
+                        <div class="col-md-6 col-sm-6 col-6">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" v-model="formData.username">
                         </div>
-                        <div class="col-md-6 form-column">
+                        <div class="col-md-6 col-sm-6 col-6">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" class="form-control" id="password" v-model="formData.password">
                         </div>
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-6 form-column">
+                        <div class="col-md-6 col-sm-6 col-6">
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian">
                                 <label class="form-check-label" for="isAustralian">Australian Resident?</label>
                             </div>
                         </div>
-                        <div class="col-md-6 form-column">
+                        <div class="col-md-6 col-sm-6 col-6">
                             <div class="form-check">
                                 <label class="form-label" for="gender">Gender</label>
                                 <select class="form-select" id="gender" v-model="formData.gender">
