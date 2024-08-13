@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AboutView from '../views/AboutView.vue';
 import LoginView from '@/views/LoginView.vue';
+import AccessDenied from '@/views/AccessDenied.vue';
 import store from '@/store';
 // create routes
 const routes = [
@@ -22,6 +23,11 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: LoginView
+    },
+    {
+        path: '/denied',
+        name: 'Denied',
+        component: AccessDenied
     }
     
 ]
