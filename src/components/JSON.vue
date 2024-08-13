@@ -106,7 +106,7 @@
     <section class="lab-section">
       <h2>Attribute, Class and Style Binding with <code>v-bind</code></h2>
       <p>Highlighting Specific Authors:</p>
-      <li v-for="author in authors" :key="author" :class="{highlight: author.id == highlightAuthorId}">
+      <li v-for="author in authors" :key="author" :class="{highlight: author.id == orwell?.id}">
         {{ author.name }}
       </li>
     </section>
@@ -147,7 +147,7 @@ const austen = computed(() => {
   return authors.filter((author) => author.id == 1)[0]
 })
 
-const highlightAuthorId = 2
+
 </script>
 
 <style scoped>
