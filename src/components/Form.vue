@@ -67,10 +67,10 @@
                 </form>
                 <!-- a card -->
                 <!-- check of any items in submittedCards and return number of elements in the array -->
-                <div class="row mt-5" v-if="submittedCards.length">
-                    <!-- flexbox container: flexbox layout, child elements wrap to next line if not fit in one row, aligns child elements to start of container -->
+                <!-- <div class="row mt-5" v-if="submittedCards.length">
+                    flexbox container: flexbox layout, child elements wrap to next line if not fit in one row, aligns child elements to start of container
                     <div class="d-flex flex-wrap justify-content-start">
-                        <!-- iterate over submittedCards: assigns unique key to each card element using index. 18rem: fixed width of 18 rem units -->
+                        iterate over submittedCards: assigns unique key to each card element using index. 18rem: fixed width of 18 rem units
                         <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
                             <div class="card-header">
                                 User Information
@@ -84,7 +84,14 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <DataTable :value="submittedCards" table-style="min-width: 50 rem">
+                    <Column field="username" header="Username"></Column>
+                    <Column field="password" header="Password"></Column>
+                    <Column field="isAustralian" header="Australian Resident"></Column>
+                    <Column field="gender" header="Gender"></Column>
+                    <Column field="reason" header="Reason"></Column>
+                </DataTable>
             </div>
         </div>
     </div>
@@ -92,6 +99,10 @@
 
 <script setup>
     import { ref } from "vue";
+
+    // import primevue
+    import DataTable from "primevue/datatable";
+    import Column from "primevue/column";
     const formData = ref({
         username: '',
         password: '',
@@ -107,7 +118,7 @@
         validatePassword(true);
         validateGender(true);
         validateReason(true);
-        if(!errors.value.username && !errors.value.password){
+        if(!errors.value.username && !errors.value.password && !validateGender && !validateReason){
             submittedCards.value.push({
             ...formData.value
             });
@@ -165,24 +176,28 @@
 
     const validateGender = (blur) => {
         if (!formData.value.gender) {
-            errors.value.gender = 'Please select an option.';
+            if (blur) errors.value.gender = 'Please select an option.';
         } else {
-            errors.value.username = null;
+            errors.value.gender = null;
         }
     }
 
     const validateReason = (blur) => {
         if (!formData.value.reason) {
-            errors.value.reason = 'Reason cannot be empty.';
+            if (blur) errors.value.reason = 'Reason cannot be empty.';
         } else if (formData.value.reason.length <3) {
-            errors.value.reason = 'Reason must be at least 10 characters long.';
+            if (blur) errors.value.reason = 'Reason must be at least 10 characters long.';
         } else {
             errors.value.reason = null;
         }
     }
-
+    // how to validate checkbox?
     const validateResident = (blur) => {
-        
+        if (!formData.value.resident) {
+            if (blur) errors.value.resident = '';
+        } else {
+            errors.value.resident = null;
+        }
     }
 </script>
 
