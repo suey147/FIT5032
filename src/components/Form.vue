@@ -23,23 +23,6 @@
                             <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-6">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" 
-                                @blur="() => validatePassword(true)" 
-                                @input="() => validatePassword(false)"
-                                v-model="formData.password">
-                            <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian">
-                                <label class="form-check-label" for="isAustralian">Australian Resident?</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
                             <div class="form-check">
                                 <label class="form-label" for="gender">Gender</label>
                                 <select class="form-select" id="gender" 
@@ -51,6 +34,32 @@
                                     <option value="other">Other</option>
                                 </select>
                                 <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" 
+                                @blur="() => validatePassword(true)" 
+                                @input="() => validatePassword(false)"
+                                v-model="formData.password">
+                            <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <label for="confirm-password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirm-password" 
+                                @blur="() => validateConfirmPassword(true)" 
+                                @input="() => validateConfirmPassword(false)"
+                                v-model="formData.confirmPassword">
+                            <div v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 col-sm-6 col-6">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian">
+                                <label class="form-check-label" for="isAustralian">Australian Resident?</label>
                             </div>
                         </div>
                     </div>
@@ -113,6 +122,7 @@
     const formData = ref({
         username: '',
         password: '',
+        confirmPassword: '',
         isAustralian: false,
         reason: '',
         gender: ''
@@ -125,7 +135,8 @@
         validatePassword(true);
         validateGender(true);
         validateReason(true);
-        if(!errors.value.username && !errors.value.password && !validateGender && !validateReason){
+        validateConfirmPassword(true);
+        if(!errors.value.username && !errors.value.password && !validateGender && !validateReason && !validateConfirmPassword){
             submittedCards.value.push({
             ...formData.value
             });
@@ -137,6 +148,7 @@
     const clearForm = () => {
         formData.value.username = '';
         formData.value.password = '';
+        formData.value.confirmPassword = '';
         formData.value.isAustralian = false;
         formData.value.reason = '';
         formData.value.gender = '';
@@ -204,6 +216,14 @@
             if (blur) errors.value.resident = '';
         } else {
             errors.value.resident = null;
+        }
+    }
+
+    const validateConfirmPassword = (blur) => {
+        if (formData.value.password !== formData.value.confirmPassword) {
+            if (blur) errors.value.confirmPassword = 'Passwords do not match.'
+        } else {
+            errors.value.confirmPassword = null
         }
     }
 </script>
