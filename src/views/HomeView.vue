@@ -102,6 +102,7 @@
             </div>
         </div>
     </div> 
+    <!-- database -->
     <div class="row mt-5">
         <h4>This is a Primevue Datatable.</h4>
         <DataTable :value="submittedCards" table-style="min-width: 50 rem">

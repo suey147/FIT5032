@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
-
+import store from './store'
 const app = createApp(App);
 app.use(PrimeVue, {
     theme: {
@@ -15,4 +15,5 @@ app.use(PrimeVue, {
     }
 });
 app.use(router)
+app.use(store)
 app.mount('#app')
