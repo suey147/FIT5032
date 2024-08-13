@@ -11,7 +11,12 @@
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-6 col-6">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" v-model="formData.username">
+                            <!-- check when unfocuses and input field value changes -->
+                            <input type="text" class="form-control" id="username" 
+                                @blur="() => validateName(true)" 
+                                @input="() => validateName(false)"
+                                v-model="formData.username">
+                            <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
                         </div>
                         <div class="col-md-6 col-sm-6 col-6">
                             <label for="password" class="form-label">Password</label>
@@ -86,9 +91,14 @@
     const submittedCards = ref([]);
 
     const submitForm = () => {
-        submittedCards.value.push({
+        validateName(true);
+        if(!errors.value.username){
+            submittedCards.value.push({
             ...formData.value
-        });
+            });
+            clearForm();
+        }
+
     };
 
     const clearForm = () => {
@@ -97,6 +107,22 @@
         formData.value.isAustralian = false;
         formData.value.reason = '';
         formData.value.gender = '';
+    }
+
+    const errors = ref({
+        username: null,
+        password: null,
+        resident: null,
+        gender: null,
+        reason: null
+    });
+    // blur is boolean that indicates whether the validation was triggered
+    const validateName = (blur) => {
+        if (formData.value.username.length <3){
+            if(blur) errors.value.username = "Name must be at least 3 characters";
+        } else {
+            errors.value.username = null;
+        }
     }
 </script>
 
