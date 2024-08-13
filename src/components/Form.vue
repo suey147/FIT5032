@@ -90,6 +90,14 @@
             ...formData.value
         });
     };
+
+    const clearForm = () => {
+        formData.value.username = '';
+        formData.value.password = '';
+        formData.value.isAustralian = false;
+        formData.value.reason = '';
+        formData.value.gender = '';
+    }
 </script>
 
 <style scoped>
