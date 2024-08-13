@@ -4,7 +4,11 @@
         <div class="row">
             <!-- a column spans 8 grid spaces centred by offsetting 2 grid -->
             <div class="col-md-8 offset-md-2">
-                <h1 class="text-center">User Information Form</h1>
+                <h1 class="text-center">🗄️ W5. Library Registration Form</h1>
+                <p class="text-center">
+                    This form now includes validation. Registered users are displayed in a data table below
+                    (PrimeVue).
+                </p>
                 <!-- prevent defaul submit behaviour -->
                 <form @submit.prevent="submitForm">
                     <!-- add bottom margin of 3 units -->
@@ -67,7 +71,7 @@
                 </form>
                 <!-- a card -->
                 <!-- check of any items in submittedCards and return number of elements in the array -->
-                <!-- <div class="row mt-5" v-if="submittedCards.length">
+                <div class="row mt-5" v-if="submittedCards.length">
                     flexbox container: flexbox layout, child elements wrap to next line if not fit in one row, aligns child elements to start of container
                     <div class="d-flex flex-wrap justify-content-start">
                         iterate over submittedCards: assigns unique key to each card element using index. 18rem: fixed width of 18 rem units
@@ -84,14 +88,17 @@
                             </ul>
                         </div>
                     </div>
-                </div> -->
-                <DataTable :value="submittedCards" table-style="min-width: 50 rem">
-                    <Column field="username" header="Username"></Column>
-                    <Column field="password" header="Password"></Column>
-                    <Column field="isAustralian" header="Australian Resident"></Column>
-                    <Column field="gender" header="Gender"></Column>
-                    <Column field="reason" header="Reason"></Column>
-                </DataTable>
+                </div> 
+                <div class="row mt-5">
+                    <h4>This is a Primevue Datatable.</h4>
+                    <DataTable :value="submittedCards" table-style="min-width: 50 rem">
+                        <Column field="username" header="Username"></Column>
+                        <Column field="password" header="Password"></Column>
+                        <Column field="isAustralian" header="Australian Resident"></Column>
+                        <Column field="gender" header="Gender"></Column>
+                        <Column field="reason" header="Reason"></Column>
+                    </DataTable>
+                </div>
             </div>
         </div>
     </div>
@@ -202,7 +209,25 @@
 </script>
 
 <style scoped>
+    .container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 80vw;
+    margin: 0 auto;
+    padding: 20px;
+    /* background-color: #e0bfbf; */
+    border-radius: 10px;
+    }
 
+    /* Class selectors */
+    .form {
+    text-align: center;
+    margin-top: 50px;
+    }
+
+    /* ID selectors */
+    #username:focus,
+    #password:focus,
+    #isAustralian:focus,
     .card {
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -217,17 +242,5 @@
     .list-group-item {
     padding: 10px;
     }
-
-    .form-column {
-    flex: 1;
-    padding: 10px;
-    box-sizing: border-box;
-    }
-    @media (max-width: 576px) {
-    .form-column {
-    flex: 0 0 100%;
-    max-width: 100%;
-    }
-}
 
 </style>
