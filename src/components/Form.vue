@@ -38,18 +38,26 @@
                         <div class="col-md-6 col-sm-6 col-6">
                             <div class="form-check">
                                 <label class="form-label" for="gender">Gender</label>
-                                <select class="form-select" id="gender" v-model="formData.gender">
+                                <select class="form-select" id="gender" 
+                                    @blur="() => validateGender(true)" 
+                                    @input="() => validateGender(false)"
+                                    v-model="formData.gender">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                     <option value="other">Other</option>
                                 </select>
+                                <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="reason" class="form-label">Reason for joining</label>
-                        <textarea class="form-control" id="reason" rows="3" v-model="formData.reason"></textarea>
+                        <textarea class="form-control" id="reason" rows="3" 
+                        @blur="() => validateReason(true)" 
+                        @input="() => validateReason(false)"
+                        v-model="formData.reason"></textarea>
+                        <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -97,6 +105,8 @@
     const submitForm = () => {
         validateName(true);
         validatePassword(true);
+        validateGender(true);
+        validateReason(true);
         if(!errors.value.username && !errors.value.password){
             submittedCards.value.push({
             ...formData.value
@@ -154,11 +164,21 @@
     }
 
     const validateGender = (blur) => {
-
+        if (!formData.value.gender) {
+            errors.value.gender = 'Please select an option.';
+        } else {
+            errors.value.username = null;
+        }
     }
 
     const validateReason = (blur) => {
-        
+        if (!formData.value.reason) {
+            errors.value.reason = 'Reason cannot be empty.';
+        } else if (formData.value.reason.length <3) {
+            errors.value.reason = 'Reason must be at least 10 characters long.';
+        } else {
+            errors.value.reason = null;
+        }
     }
 
     const validateResident = (blur) => {
