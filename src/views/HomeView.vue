@@ -1,124 +1,116 @@
 <template>
-    <!-- centre container with top margin of 5 units -->
-    <div class="container mt-5">
-        <div class="row">
-            <!-- a column spans 8 grid spaces centred by offsetting 2 grid -->
-            <div class="col-md-8 offset-md-2">
-                <h1 class="text-center">🗄️ W5. Library Registration Form</h1>
-                <p class="text-center">
-                    This form now includes validation. Registered users are displayed in a data table below
-                    (PrimeVue).
-                </p>
-                <!-- prevent defaul submit behaviour -->
-                <form @submit.prevent="submitForm">
-                    <!-- add bottom margin of 3 units -->
-                     <!-- User name and Gender -->
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="username" class="form-label">Username</label>
-                            <!-- check when unfocuses and input field value changes -->
-                            <input type="text" class="form-control" id="username" 
-                                @blur="() => validateName(true)" 
-                                @input="() => validateName(false)"
-                                v-model="formData.username">
-                            <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <div class="form-check">
-                                <label class="form-label" for="gender">Gender</label>
-                                <select class="form-select" id="gender" 
-                                    @blur="() => validateGender(true)" 
-                                    @input="() => validateGender(false)"
-                                    v-model="formData.gender">
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="other">Other</option>
-                                </select>
-                                <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- password and confirm password -->
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" 
-                                @blur="() => validatePassword(true)" 
-                                @input="() => validatePassword(false)"
-                                v-model="formData.password">
-                            <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <label for="confirm-password" class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirm-password" 
-                                @blur="() => validateConfirmPassword(true)" 
-                                @input="() => validateConfirmPassword(false)"
-                                v-model="formData.confirmPassword">
-                            <div v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</div>
-                        </div>
-                    </div>
-                    <!-- is australian -->
-                    <div class="row mb-3">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian">
-                                <label class="form-check-label" for="isAustralian">Australian Resident?</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- reason -->
-                    <div class="mb-3">
-                        <label for="reason" class="form-label">Reason for joining</label>
-                        <textarea class="form-control" id="reason" rows="3" 
-                        @blur="() => validateReason(true)" 
-                        @input="() => validateReason(false)"
-                        v-model="formData.reason"></textarea>
-                        <div v-if="errors.reason" :class="{ 'text-danger': !isFrendReason, 'text-success': isFrendReason}">{{ errors.reason }}</div>
-                    </div>
-                    <!-- suburb -->
-                    <div class="mb-3">
-                        <label for="reason" class="form-label">Suburb</label>
-                        <input type="text" class="form-control" id="suburb" v-bind:value="formData.suburb" />
-                    </div>
-
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary me-2">Submit</button>
-                        <!-- clear the form -->
-                        <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
-                    </div>
-                </form>
-                <!-- a card -->
-                <!-- check of any items in submittedCards and return number of elements in the array -->
-                <div class="row mt-5" v-if="submittedCards.length">
-                    flexbox container: flexbox layout, child elements wrap to next line if not fit in one row, aligns child elements to start of container
-                    <div class="d-flex flex-wrap justify-content-start">
-                        iterate over submittedCards: assigns unique key to each card element using index. 18rem: fixed width of 18 rem units
-                        <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
-                            <div class="card-header">
-                                User Information
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Username: {{ card.username }}</li>
-                                <li class="list-group-item">Password: {{ card.password }}</li>
-                                <li class="list-group-item">Australian Resident: {{ card.isAustralian ? 'Yes' : 'No' }}</li>
-                                <li class="list-group-item">Gender: {{ card.gender }}</li>
-                                <li class="list-group-item">Reason: {{ card.reason }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> 
-                <div class="row mt-5">
-                    <h4>This is a Primevue Datatable.</h4>
-                    <DataTable :value="submittedCards" table-style="min-width: 50 rem">
-                        <Column field="username" header="Username"></Column>
-                        <Column field="password" header="Password"></Column>
-                        <Column field="isAustralian" header="Australian Resident"></Column>
-                        <Column field="gender" header="Gender"></Column>
-                        <Column field="reason" header="Reason"></Column>
-                    </DataTable>
+    <h1 class="text-center">🗄️ W5. Library Registration Form</h1>
+    <p class="text-center">
+        This form now includes validation. Registered users are displayed in a data table below
+        (PrimeVue).
+    </p>
+    <!-- prevent defaul submit behaviour -->
+    <form @submit.prevent="submitForm">
+        <!-- add bottom margin of 3 units -->
+            <!-- User name and Gender -->
+        <div class="row mb-3">
+            <div class="col-md-6 col-sm-6 col-6">
+                <label for="username" class="form-label">Username</label>
+                <!-- check when unfocuses and input field value changes -->
+                <input type="text" class="form-control" id="username" 
+                    @blur="() => validateName(true)" 
+                    @input="() => validateName(false)"
+                    v-model="formData.username">
+                <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-6">
+                <div class="form-check">
+                    <label class="form-label" for="gender">Gender</label>
+                    <select class="form-select" id="gender" 
+                        @blur="() => validateGender(true)" 
+                        @input="() => validateGender(false)"
+                        v-model="formData.gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div v-if="errors.gender" class="text-danger">{{ errors.gender }}</div>
                 </div>
             </div>
         </div>
+        <!-- password and confirm password -->
+        <div class="row mb-3">
+            <div class="col-md-6 col-sm-6 col-6">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" 
+                    @blur="() => validatePassword(true)" 
+                    @input="() => validatePassword(false)"
+                    v-model="formData.password">
+                <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-6">
+                <label for="confirm-password" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm-password" 
+                    @blur="() => validateConfirmPassword(true)" 
+                    @input="() => validateConfirmPassword(false)"
+                    v-model="formData.confirmPassword">
+                <div v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</div>
+            </div>
+        </div>
+        <!-- is australian -->
+        <div class="row mb-3">
+            <div class="col-md-6 col-sm-6 col-6">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="isAustralian" v-model="formData.isAustralian">
+                    <label class="form-check-label" for="isAustralian">Australian Resident?</label>
+                </div>
+            </div>
+        </div>
+        <!-- reason -->
+        <div class="mb-3">
+            <label for="reason" class="form-label">Reason for joining</label>
+            <textarea class="form-control" id="reason" rows="3" 
+            @blur="() => validateReason(true)" 
+            @input="() => validateReason(false)"
+            v-model="formData.reason"></textarea>
+            <div v-if="errors.reason" :class="{ 'text-danger': !isFrendReason, 'text-success': isFrendReason}">{{ errors.reason }}</div>
+        </div>
+        <!-- suburb -->
+        <div class="mb-3">
+            <label for="reason" class="form-label">Suburb</label>
+            <input type="text" class="form-control" id="suburb" v-bind:value="formData.suburb" />
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary me-2">Submit</button>
+            <!-- clear the form -->
+            <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
+        </div>
+    </form>
+    <!-- a card -->
+    <!-- check of any items in submittedCards and return number of elements in the array -->
+    <div class="row mt-5" v-if="submittedCards.length">
+        flexbox container: flexbox layout, child elements wrap to next line if not fit in one row, aligns child elements to start of container
+        <div class="d-flex flex-wrap justify-content-start">
+            iterate over submittedCards: assigns unique key to each card element using index. 18rem: fixed width of 18 rem units
+            <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
+                <div class="card-header">
+                    User Information
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Username: {{ card.username }}</li>
+                    <li class="list-group-item">Password: {{ card.password }}</li>
+                    <li class="list-group-item">Australian Resident: {{ card.isAustralian ? 'Yes' : 'No' }}</li>
+                    <li class="list-group-item">Gender: {{ card.gender }}</li>
+                    <li class="list-group-item">Reason: {{ card.reason }}</li>
+                </ul>
+            </div>
+        </div>
+    </div> 
+    <div class="row mt-5">
+        <h4>This is a Primevue Datatable.</h4>
+        <DataTable :value="submittedCards" table-style="min-width: 50 rem">
+            <Column field="username" header="Username"></Column>
+            <Column field="password" header="Password"></Column>
+            <Column field="isAustralian" header="Australian Resident"></Column>
+            <Column field="gender" header="Gender"></Column>
+            <Column field="reason" header="Reason"></Column>
+        </DataTable>
     </div>
 </template>
 
