@@ -70,7 +70,7 @@
                         @blur="() => validateReason(true)" 
                         @input="() => validateReason(false)"
                         v-model="formData.reason"></textarea>
-                        <div v-if="errors.reason" class="text-danger">{{ errors.reason }}</div>
+                        <div v-if="errors.reason" :class="{ 'text-danger': !isFrendReason, 'text-success': isFrendReason}">{{ errors.reason }}</div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -201,10 +201,20 @@
         }
     }
 
+    let isFrendReason = false;
     const validateReason = (blur) => {
         if (!formData.value.reason) {
+            isFrendReason = false;
             if (blur) errors.value.reason = 'Reason cannot be empty.';
-        } else if (formData.value.reason.length <3) {
+        } 
+        else if (formData.value.reason.toLowerCase().includes('friend')) {
+            if (blur) {
+                errors.value.reason = 'Great to have a friend';
+                isFrendReason = true;
+            }
+        }
+        else if (formData.value.reason.length <3) {
+            isFrendReason = false;
             if (blur) errors.value.reason = 'Reason must be at least 10 characters long.';
         } else {
             errors.value.reason = null;
