@@ -12,6 +12,7 @@
                 <!-- prevent defaul submit behaviour -->
                 <form @submit.prevent="submitForm">
                     <!-- add bottom margin of 3 units -->
+                     <!-- User name and Gender -->
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-6 col-6">
                             <label for="username" class="form-label">Username</label>
@@ -37,6 +38,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- password and confirm password -->
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-6 col-6">
                             <label for="password" class="form-label">Password</label>
@@ -55,6 +57,7 @@
                             <div v-if="errors.confirmPassword" class="text-danger">{{ errors.confirmPassword }}</div>
                         </div>
                     </div>
+                    <!-- is australian -->
                     <div class="row mb-3">
                         <div class="col-md-6 col-sm-6 col-6">
                             <div class="form-check">
@@ -63,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- reason -->
                     <div class="mb-3">
                         <label for="reason" class="form-label">Reason for joining</label>
                         <textarea class="form-control" id="reason" rows="3" 
@@ -72,6 +75,12 @@
                         v-model="formData.reason"></textarea>
                         <div v-if="errors.reason" :class="{ 'text-danger': !isFrendReason, 'text-success': isFrendReason}">{{ errors.reason }}</div>
                     </div>
+                    <!-- suburb -->
+                    <div class="mb-3">
+                        <label for="reason" class="form-label">Suburb</label>
+                        <input type="text" class="form-control" id="suburb" v-bind:value="formData.suburb" />
+                    </div>
+
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                         <!-- clear the form -->
@@ -125,7 +134,8 @@
         confirmPassword: '',
         isAustralian: false,
         reason: '',
-        gender: ''
+        gender: '',
+        suburb: 'Clayton'
     });
 
     const submittedCards = ref([]);
