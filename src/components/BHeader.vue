@@ -29,7 +29,6 @@
 
   const handleLogout = () => {
     store.commit('setAuthenticated', false);
-    router.push({ name: 'Login' });
   };
 </script>
 <style scoped>
