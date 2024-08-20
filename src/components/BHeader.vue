@@ -8,20 +8,31 @@
                 <router-link v-if="$store.state.isAuthenticated" to="/" class="nav-link" active-class="active" aria-current="page">Home (Week 5)</router-link>
             </li>
             <li class="nav-item">
-                <router-link v-if="$store.state.isAuthenticated" to="/about" class="nav-link" active-class="active">About</router-link>
+                <router-link to="/about" class="nav-link" active-class="active">About</router-link>
             </li>
             <li class="nav-item">
                 <router-link v-if="!$store.state.isAuthenticated" to="/login" class="nav-link" active-class="active">Login</router-link>
             </li>
             <li class="nav-item">
-                <router-link v-if="$store.state.isAuthenticated" to="/login" class="nav-link" active-class="active">Logout</router-link>
+                <router-link v-if="$store.state.isAuthenticated" to="/logout"  @click="handleLogout" class="nav-link" active-class="active">Logout</router-link>
             </li>
         </ul>
       </header>
     </div>
 </template>
-  
-  <style scoped>
+<script setup>
+  import { useStore} from 'vuex'
+  import { useRouter } from 'vue-router';
+
+  const store = useStore();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    store.commit('setAuthenticated', false);
+    router.push({ name: 'Login' });
+  };
+</script>
+<style scoped>
   .b-example-divider {
     height: 3rem;
     background-color: rgba(0, 0, 0, 0.1);

@@ -223,14 +223,6 @@
             errors.value.reason = null;
         }
     }
-    // how to validate checkbox?
-    const validateResident = (blur) => {
-        if (!formData.value.resident) {
-            if (blur) errors.value.resident = '';
-        } else {
-            errors.value.resident = null;
-        }
-    }
 
     const validateConfirmPassword = (blur) => {
         if (formData.value.password !== formData.value.confirmPassword) {

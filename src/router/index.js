@@ -28,6 +28,12 @@ const routes = [
         path: '/denied',
         name: 'Denied',
         component: AccessDenied
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: LoginView,
+        meta: {requiresAuth: false}
     }
     
 ]
