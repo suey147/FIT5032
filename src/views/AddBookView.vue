@@ -16,6 +16,7 @@
         <p><button class="btn btn-primary me-2" type="submit">Add book</button></p>
     </form>
     <BookList/>
+    <UpdateBookView />
 </template>
 
 <script setup>
@@ -23,6 +24,7 @@
     import db from '../firebase/init.js'
     import { collection, addDoc } from "firebase/firestore";
     import BookList from "./BookList.vue";
+    import UpdateBookView from "./UpdateBookView.vue";
 
     const bookData = ref({
         name: '',
