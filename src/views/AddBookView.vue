@@ -15,12 +15,14 @@
         </div>
         <p><button class="btn btn-primary me-2" type="submit">Add book</button></p>
     </form>
+    <BookList/>
 </template>
 
 <script setup>
     import {ref} from "vue"
     import db from '../firebase/init.js'
     import { collection, addDoc } from "firebase/firestore";
+    import BookList from "./BookList.vue";
 
     const bookData = ref({
         name: '',
@@ -47,4 +49,5 @@
         }
     }
 
+    
 </script>
