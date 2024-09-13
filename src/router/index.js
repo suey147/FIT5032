@@ -58,7 +58,7 @@ const router = createRouter({
 router.beforeEach((to, from) => {
     if (to.meta.requiresAuth && !store.getters.isAuthenticated){
         return {
-            path: '/login',
+            path: '/FireLogin',
             query: { redirect: to.fullPath },
         }
     }

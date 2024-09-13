@@ -34,7 +34,7 @@
   const router = useRouter();
 
   const handleLogout = () => {
-    store.commit('setAuthenticated', false);
+    store.commit('logout');
   };
 </script>
 <style scoped>
