@@ -6,6 +6,7 @@ import AccessDenied from '@/views/AccessDenied.vue';
 import store from '@/store';
 import FirebaseSignInView from '@/views/FirebaseSignInView.vue';
 import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue';
+import AddBookView from '@/views/AddBookView.vue';
 // create routes
 const routes = [
     
@@ -46,6 +47,11 @@ const routes = [
         path: '/FireRegister',
         name: 'FireRegister',
         component: FirebaseRegisterView
+    },
+    {
+        path: '/addBook',
+        name: 'AddBook',
+        component: AddBookView
     }
     
 ]
