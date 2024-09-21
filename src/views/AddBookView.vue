@@ -43,6 +43,9 @@
                 isbn: isbnNumber,
                 name: bookData.value.name
             });
+
+            console.log(`Newly added book: ISBN: ${bookData.value.isbn}, Name: ${bookData.value.name}`);
+            
             bookData.value.isbn = '';
             bookData.value.name = '';
             alert('Book added successfully!');

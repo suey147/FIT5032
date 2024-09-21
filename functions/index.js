@@ -9,8 +9,8 @@
 
 const {onRequest} = require("firebase-functions/v2/https");
 const admin = require("firebase-admin");
+const {onDocumentCreated} = require("firebase-functions/v2/firestore");
 const cors = require("cors")({origin: true});
-// const logger = require("firebase-functions/logger");
 
 admin.initializeApp();
 
@@ -35,4 +35,26 @@ exports.countBooks = onRequest((req, res) => {
       res.status(500).send("Error counting books");
     }
   });
+});
+exports.capitalizeBookData = onDocumentCreated("books/{docId}", async (event)=>{
+  try {
+    const snapshot = event.data;
+    if (!snapshot) {
+      console.log("No data associated with the event");
+      return;
+    }
+    const bookData = snapshot.data();
+    const docRef = snapshot.ref;
+    // Capitalizing the data
+    const capitalizedTitle = bookData.name.toUpperCase();
+
+    // Updating the document with capitalized data
+    await docRef.set({
+      name: capitalizedTitle,
+    }, {merge: true});
+
+    console.log(`Document ${snapshot.id} updated with capitalized data`);
+  } catch (error) {
+    console.error("Error capitalizing book data: ", error.message);
+  }
 });
