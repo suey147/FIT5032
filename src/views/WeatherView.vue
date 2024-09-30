@@ -42,10 +42,11 @@
     const apikey = "68f0bf78fc8d6c07f6fe1578c481765c";
     const city = ref('');
     const weatherData = ref(null);
+    const locationData = ref(null);
     const hourlyForecast = ref([]);
     const dailyForecast = ref([]);
     onMounted( () => {
-        FetchCurrentLocationWeather();
+        // FetchCurrentLocationWeather();
     });
 
     const temperature = computed(() => {
@@ -69,6 +70,28 @@
         try {
             const response = await axios.get(url);
             weatherData.value = response.data;
+            console.log(weatherData.value)
+        } catch (error) {
+            console.error("Error fetching weather data: ", error);
+        }
+    }
+
+    const searchByCity = async () => {
+        const geocodingURl = `http://api.openweathermap.org/geo/1.0/direct?q=${city.value}&limit=1&appid=${apikey}`
+        await fetchLocationData(geocodingURl);
+        if (locationData.value.length > 0)
+        {
+            const url = `http://api.openweathermap.org/data/2.5/weather?lat=${locationData.value[0].lat}&lon=${locationData.value[0].lon}&appid=${apikey}`;
+            await fetchWeatherData(url);
+        }else{
+            console.log("No location found")
+        }
+    }
+
+    const fetchLocationData = async (url) => {
+        try {
+            const response = await axios.get(url);
+            locationData.value = response.data;
         } catch (error) {
             console.error("Error fetching weather data: ", error);
         }
