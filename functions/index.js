@@ -58,3 +58,18 @@ exports.capitalizeBookData = onDocumentCreated("books/{docId}", async (event)=>{
     console.error("Error capitalizing book data: ", error.message);
   }
 });
+exports.getAllBooks = onRequest((req, res) => {
+  cors(req, res, async () => {
+    try {
+      const booksCollection = admin.firestore().collection("books");
+      const snapshot = await booksCollection.get();
+      const documents = snapshot.docs.map((doc) => (
+        {id: doc.id, ...doc.data()}));
+
+      res.status(200).send(documents);
+    } catch (error) {
+      console.error("Error counting books: ", error.message);
+      res.status(500).send("Error counting books");
+    }
+  });
+});
